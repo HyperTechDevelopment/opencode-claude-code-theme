@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="logoTitle logoDesc">
+  <title id="logoTitle">claude-code theme mark</title>
+  <desc id="logoDesc">Terminal prompt chevron with block cursor in Claude terracotta and cream on a warm dark tile.</desc>
+
+  <g id="tile">
+    <rect x="32" y="32" width="192" height="192" rx="44" fill="#262320" stroke="#4A4540" stroke-width="6"/>
+  </g>
+
+  <g id="prompt">
+    <path id="chevron" d="M78 88 L122 128 L78 168" fill="none" stroke="#D97757" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect id="cursor" x="142" y="76" width="30" height="104" rx="6" fill="#EDE9E3"/>
+  </g>
+</svg>
