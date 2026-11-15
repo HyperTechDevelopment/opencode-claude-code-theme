@@ -4,16 +4,18 @@
 
 # claude-code
 
+[Português](./README.pt-BR.md)
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-D97757.svg)](./LICENSE)
 [![OpenCode V2](https://img.shields.io/badge/OpenCode-V2-EDE9E3.svg)](https://opencode.ai/docs/themes/)
 [![dark-only](https://img.shields.io/badge/mode-dark--only-1E1C1A.svg)](./claude-code.json)
 
-A dark [OpenCode](https://opencode.ai) TUI theme in Claude Code's visual voice:
-warm cream text on near-black brown, terracotta orange actions.
+A dark [OpenCode](https://opencode.ai) TUI theme built from Claude Code's
+palette: cream `#EDE9E3` text on `#1E1C1A`, terracotta `#D97757` accents.
 
 ## Palette
 
-Real values from [`claude-code.json`](./claude-code.json) (`dark.hue`):
+Values below match [`claude-code.json`](./claude-code.json) (`dark.hue`):
 
 | Role | Hex | Used for |
 | --- | --- | --- |
@@ -21,12 +23,20 @@ Real values from [`claude-code.json`](./claude-code.json) (`dark.hue`):
 | Text | `#EDE9E3` | primary text (14.05:1 on bg) |
 | Muted | `#B8B0A7` | secondary text (7.93:1 on bg) |
 | Accent | `#D97757` | actions, keywords, headings |
-| Accent light | `#F5B79E` | highlighted/selected text (9.83:1 on bg) |
+| Accent light | `#F5B79E` | highlighted text (9.83:1 on bg) |
 | Green | `#9AD8A8` | strings, success, diff added |
 | Red | `#F2A89B` | variables, errors, diff removed |
 
-Full ramps (100–900) for `gray, red, orange, yellow, green, cyan, blue, purple`
-plus `accent → orange`, `interactive → orange`, `neutral → gray` live in the file.
+Full 100–900 ramps for `gray, red, orange, yellow, green, cyan, blue, purple`;
+`accent → orange`, `interactive → orange`, `neutral → gray` aliases live in the file.
+
+## Design decisions
+
+- One warm accent does all interactive work (`accent` and `interactive` both
+  resolve to orange), the way Claude Code uses terracotta everywhere.
+- Syntax keeps hues distinct (keyword orange, function blue, string green) so
+  code scans at a glance; comments stay muted.
+- Dark only: a single palette to maintain. A `light` request falls back to it.
 
 ## Install (manual)
 
@@ -40,8 +50,7 @@ the filename becomes the theme name.
 
 Project-only alternative: `.opencode/themes/` inside the project tree.
 
-Then restart the TUI and run `/themes` → select `claude-code`, or set it in
-`cli.json`:
+Restart the TUI, run `/themes`, select `claude-code`. Or pin it in `cli.json`:
 
 ```json
 {
@@ -51,8 +60,8 @@ Then restart the TUI and run `/themes` → select `claude-code`, or set it in
 
 ## Install via your AI agent
 
-Copy the prompt below and paste it into your coding agent. It downloads this
-theme, validates it, and installs it without touching anything else.
+Paste the prompt below into your coding agent. It downloads this theme,
+validates it, and installs it without touching anything else.
 
 ```text
 Install the "claude-code" OpenCode theme from GitHub.
@@ -71,27 +80,52 @@ Install the "claude-code" OpenCode theme from GitHub.
    and report the validation results.
 ```
 
+## Mark
+
+<p>
+  <img src="./assets/readme/claude-code-logo.svg" width="120" alt="claude-code mark: terminal chevron and block cursor on a warm dark tile">
+</p>
+
+Chevron plus block cursor, the two glyphs a terminal theme actually shows.
+Motion (a 1.6 s cursor blink) is specified in
+[`claude-code-logo-motion.md`](./assets/readme/claude-code-logo-motion.md);
+the deterministic render recipe is
+[`claude-code-logo-animation.mjs`](./assets/readme/claude-code-logo-animation.mjs).
+
 ## What's inside
 
 ```text
 opencode-claude-code-theme/
-├── claude-code.json     # the theme (dark-only, OpenCode V2 format)
-├── assets/readme/hero.svg
+├── claude-code.json                  # the theme (dark-only, OpenCode V2 format)
+├── assets/readme/
+│   ├── hero.svg                      # README hero
+│   ├── claude-code-logo.svg          # mark (validated master)
+│   ├── claude-code-logo-motion.md    # blink specification
+│   └── claude-code-logo-animation.mjs# deterministic frame recipe
 ├── README.md
-└── LICENSE              # MIT
+├── README.pt-BR.md
+└── LICENSE                           # MIT
 ```
+
+## Troubleshooting
+
+- Theme not listed: restart the TUI after adding the file. OpenCode reads
+  `themes/` at startup.
+- Theme looks wrong: validate the JSON (command below). An invalid file is
+  ignored and the previous theme stays active.
+- `light` mode requested: falls back to this dark palette by design.
 
 ## Compatibility and limits
 
 - OpenCode **V2 only** (`base` + `dark.hue` token format).
-- **Dark only**: if `light` mode is requested, OpenCode falls back to this `dark` palette.
+- **Dark only** by design.
 - Adding the file never overwrites built-in themes. Selecting it is reversible
   in one step via `/themes`.
 
 ## Validate
 
 ```sh
-python -c "import json; d=json.load(open('claude-code.json')); print(sorted(d)), sorted(d['dark']['hue']))"
+python -c "import json; d=json.load(open('claude-code.json')); print(sorted(d), sorted(d['dark']['hue']))"
 ```
 
 Expected: `['base', 'dark']` plus the hue families
